@@ -8,6 +8,8 @@ authors = ["KWON-IRIS <joohee.kwon0@gmail.com>"]
 python = "^3.9"
 Flask = "^1.1.2"
 pymongo = "^3.11.4"
+requests = "^2.25.1"
+bs4 = "^0.0.1"
 
 [tool.poetry.dev-dependencies]
 
