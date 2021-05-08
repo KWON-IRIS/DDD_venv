@@ -20,7 +20,9 @@ def index():  # 함수이름은 고유해야함
 
 
 # 아티클 추가 api
-@app.route('/', methods=['POST'])
+# 프론트에서 받아줄 루트 설정 필요! >> index의 memo 에서 불러옴.
+
+@app.route('/memo', methods=['POST'])
 def save_memo():
     # alt+enter > flask.request 추가
     form = request.form
@@ -53,7 +55,7 @@ def save_memo():
     }
     db.articles.insert_one(document)
     return jsonify(
-        {'result': 'success'}
+        {'result': 'success','msg': '잘 저장되었습니다'}
     )
 
 
