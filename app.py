@@ -54,10 +54,19 @@ def save_memo():
         'comment': comment_receive,
     }
     db.articles.insert_one(document)
+
     return jsonify(
         {'result': 'success','msg': '잘 저장되었습니다'}
     )
 
+@app.route('/memo',methods=['GET'])
+def list_memo():
+    memos = list(db.articles.find({},{'_id': False}))
+    result = {
+        'result': 'success',
+        'articles': memos,
+    }
+    return jsonify(result)
 
 # app.py 파일을 직접 실행시킬떄 동작시킴
 # 항상 가장 아래 있어야함
