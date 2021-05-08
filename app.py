@@ -16,7 +16,8 @@ db = client.get_database('sparta')
 # {{렌더링 영역}} : flask 문법
 @app.route('/', methods=['GET'])  # 데코레이터 문법
 def index():  # 함수이름은 고유해야함
-    return render_template('index.html', test='테스트')
+    memos = list(db.articles.find({},{'_id':False}))
+    return render_template('index.html', test='테스트', memos = memos)
 
 
 # 아티클 추가 api
@@ -29,7 +30,7 @@ def save_memo():
     url_receive = form['url_give']
     comment_receive = form['comment_give']
 
-   # print(url_receive, comment_receive)
+    # print(url_receive, comment_receive)
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
 
@@ -56,17 +57,19 @@ def save_memo():
     db.articles.insert_one(document)
 
     return jsonify(
-        {'result': 'success','msg': '잘 저장되었습니다'}
+        {'result': 'success', 'msg': '잘 저장되었습니다'}
     )
 
-@app.route('/memo',methods=['GET'])
+
+@app.route('/memo', methods=['GET'])
 def list_memo():
-    memos = list(db.articles.find({},{'_id': False}))
+    memos = list(db.articles.find({}, {'_id': False}))
     result = {
         'result': 'success',
         'articles': memos,
     }
     return jsonify(result)
+
 
 # app.py 파일을 직접 실행시킬떄 동작시킴
 # 항상 가장 아래 있어야함
